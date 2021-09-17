@@ -41,61 +41,11 @@ def load_transform_encode_dataset(dir, train_name, test_name):
 
 
 def normalize_data(train, test):
-    # convert from integers to floats
-    # train_norm = train.astype('float32')
-    # test_norm = test.astype('float32')
     # normalize to range 0-1
     train_norm = train / 255.0
     test_norm = test / 255.0
     # return normalized images
     return train_norm, test_norm
-
-
-# define cnn model
-def define_model():
-    kernel_shape = (3, 3)
-    activation_function = 'relu'
-    kernel_init = 'he_uniform'
-
-    model = Sequential()
-    model.add(layers.Conv2D(
-        32, kernel_shape,
-        activation=activation_function,
-        kernel_initializer=kernel_init,
-        input_shape=(28, 28, 1)
-    ))
-    model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Conv2D(
-        64, kernel_shape,
-        activation=activation_function,
-        kernel_initializer=kernel_init
-    ))
-    model.add(layers.Conv2D(
-        64, kernel_shape,
-        activation=activation_function,
-        kernel_initializer=kernel_init
-    ))
-    model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Flatten())
-    # When classifying from a CNN, flattening and mapping to a dense layer
-    # before the final layer is a popular technique for smaller networks.
-    # Tends to result in smaller, more accurate and efficient networks.
-    model.add(layers.Dense(
-        100,
-        activation=activation_function,
-        kernel_initializer=kernel_init
-    ))
-    # The classes we want to be mapping to
-    model.add(layers.Dense(10, activation='softmax'))
-    # select and configure optimizer
-    optimizer = SGD(learning_rate=0.01, momentum=0.9)
-    # compile model
-    model.compile(
-        optimizer=optimizer,
-        loss='categorical_crossentropy',
-        metrics=['accuracy']
-    )
-    return model
 
 
 def makeLeNet5():
@@ -150,14 +100,11 @@ def run_test_harness(dir, train_name, test_name):
     # prepare pixel data
     train_input, test_input = normalize_data(train_input, test_input)
     # # evaluate model
-    # scores, histories = evaluate_model(train_input, train_output)
     model = makeLeNet5()
     train_model(model, train_input, train_output, test_size=0.2)
     scores = model.evaluate(test_input, test_output, return_dict=True)
     print("Evaluation results:")
     pprint(scores)
-    # summarize estimated performance
-    # summarize_performance(scores)
 
 
 if __name__ == '__main__':
