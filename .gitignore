@@ -1,0 +1,48 @@
+# python ignores
+# Byte-compiled / optimized /
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+*.egg-info/
+*.egg
+dist/
+
+# C extensions
+*.so
+
+# virtual environments
+.venv/
+venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# ignore mypy cache
+.mypy_cache/
+
+# IDE's ignore files
+.mr.developer.cfg
+.project
+.pydevproject
+.idea/
+.Rhistory
+.vscode/
+.ropeproject/
+
+# ignore log files
+*.log
+*.txt
+
+# ignore unit test
+.cache
+.pytest_cache/
+
+.nox/
+
+# ignore documentation files
+docs/build
+
+# ignore common data folders
+.DS_Store
+*.gz
